@@ -234,7 +234,8 @@ async def create_memory(
         metadata={
             "source_app": "openmemory",
             "mcp_client": request.app,
-        }
+        },
+        infer=False
     )
     
     # Log the response for debugging
@@ -314,7 +315,8 @@ async def create_memory(
             metadata={
                 "source_app": "openmemory",
                 "mcp_client": request.app,
-            }
+            },
+            infer=False
         )
     except Exception as e:
         logging.error(f"Failed to add to Qdrant in fallback path: {e}")
@@ -575,12 +577,12 @@ async def filter_memories(
 
         sort_field = sort_mapping[request.sort_column]
         if sort_direction == 'desc':
-            query = query.order_by(sort_field.desc())
+            query = query.order_by(Memory.id, sort_field.desc())
         else:
-            query = query.order_by(sort_field.asc())
+            query = query.order_by(Memory.id, sort_field.asc())
     else:
         # Default sorting
-        query = query.order_by(Memory.created_at.desc())
+        query = query.order_by(Memory.id, Memory.created_at.desc())
 
     # Add eager loading for categories and make the query distinct
     query = query.options(

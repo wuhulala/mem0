@@ -1,7 +1,7 @@
 import os
 
 from mem0 import Memory
-
+import json
 
 memory_client = None
 
@@ -25,24 +25,14 @@ def get_memory_client(custom_instructions: str = None) -> Memory:
         return memory_client
 
     try:
-        config = {
-            "vector_store": {
-                "provider": "qdrant",
-                "config": {
-                    "collection_name": "openmemory",
-                    "host": "mem0_store",
-                    "port": 6333,
-                }
-            },
-            "embedder": {
-                "provider": "ollama",
-                "config": {
-                    "model": "nomic-embed-text",
-                    "embedding_dims": 512,
-                    "ollama_base_url": "http://localhost:11434",
-                }
-            }
-        }
+        # load from file config.json
+        config_path = os.path.join(os.path.curdir, "config.json")
+        print(f"Memory Config path: {config_path}")
+        if os.path.exists(config_path):
+            with open(config_path, "r") as f:
+                config = json.load(f)
+        else:
+            raise Exception("Expected config.json file not found")
 
         memory_client = Memory.from_config(config_dict=config)
     except Exception:
