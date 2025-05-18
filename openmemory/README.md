@@ -23,6 +23,13 @@ After running these commands, you will have:
 - OpenMemory MCP server running at: http://localhost:8765 (API documentation available at http://localhost:8765/docs)
 - OpenMemory UI running at: http://localhost:3000
 
+```json
+"mem0-mcp": {
+      "url": "http://xxx:8765/mcp/$app_name/sse/$user_id"
+    }
+```
+you can replace `app_name` `user_id` vars
+
 ## Project Structure
 
 - `api/` - Backend APIs + MCP server
