@@ -63,7 +63,9 @@ async def add_memories(text: str) -> str:
                                          metadata={
                                             "source_app": "openmemory",
                                             "mcp_client": client_name,
-                                        })
+                                        },
+                                        infer=False,
+                                        )
 
             # Process the response and update database
             if isinstance(response, dict) and 'results' in response:

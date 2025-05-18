@@ -6,7 +6,7 @@ from mem0 import Memory
 memory_client = None
 
 
-def get_memory_client(custom_instructions: str = None):
+def get_memory_client(custom_instructions: str = None) -> Memory:
     """
     Get or initialize the Mem0 client.
 
@@ -32,6 +32,14 @@ def get_memory_client(custom_instructions: str = None):
                     "collection_name": "openmemory",
                     "host": "mem0_store",
                     "port": 6333,
+                }
+            },
+            "embedder": {
+                "provider": "ollama",
+                "config": {
+                    "model": "nomic-embed-text",
+                    "embedding_dims": 512,
+                    "ollama_base_url": "http://localhost:11434",
                 }
             }
         }
